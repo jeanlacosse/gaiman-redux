@@ -58,6 +58,16 @@ let defaultSnacks = [{
 
 const snackList = (state = defaultSnacks, action) => {
 
+switch (action.type) {
+  case 'ADD_SNACK':
+    // use spread operator to create a new array which will be rendered to dom
+    // add in the payload object from the form
+    
+    // new array is the new state of SnackList, which updates store, which is mapped over again on snacks.jsx to add to dom
+    // The defaultSnacks is not actually changed, original content is all that's left when I refresh
+    return [...state, action.payload]
+}
+
   return state;
 }
 
