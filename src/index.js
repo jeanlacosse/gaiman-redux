@@ -5,19 +5,60 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // redux setup/import
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import logger from 'redux-logger'
 
 // function to manage our state
 // reducer is a function that returns some state
 // Want to combine the reducers into am object
-const count = () => {
+// every reducer function gets arguments of state and action
+const count = (state = 5, action) => {
+  // state = 5 gives it a default value if there is no arguemt put in here
+  
+
+  // switch statement syntax
+  switch (action.type) {
+    case 'INCREASE_COUNT':
+      return state + 1;
+    case 'DECREASE_COUNT':
+      return state - 1;
+  }
+
+  // if (action.type === 'INCREASE_COUNT') {
+  //   return state + 1;
+  // }
+  // else if (action.type === 'DECREASE_COUNT') {
+  //   return state - 1;
+  // }
   // what is returned from our function is our state, used rather than useState
-  return 5;
+  return state;
 }
 
-const lectureTopic = () => {
-  return 'redux';
+const lectureTopic = (state = 'redux', action) => {
+  return state;
+}
+
+// create snack array of objects
+let defaultSnacks = [{
+  id: 0,
+  name: 'cupcake',
+  rating: 8
+},
+{
+  id: 1,
+  name: 'waffles',
+  rating: 9
+},
+{
+  id: 2,
+  name: 'cheese sticks',
+  rating: 4
+}]
+
+const snackList = (state = defaultSnacks, action) => {
+
+  return state;
 }
 
 
@@ -29,9 +70,13 @@ const store = createStore(
   combineReducers({
     // count key of my store is determined by the count function
     // the value here is tacos, as long as it lines up with function name 
-    count: count,
-    lectureTopic: lectureTopic,
-  })
+    // can use just the key name as long as there is a variable with the same name
+    count,
+    lectureTopic,
+    snackList
+  }),
+  // Here is where the middleware is added in 
+  applyMiddleware(logger)
 );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -39,7 +84,7 @@ root.render(
   <React.StrictMode>
     {/* wrap entire app in Provider */}
     <Provider store={store}>
-    <App />
+      <App />
     </Provider>
   </React.StrictMode>
 );
