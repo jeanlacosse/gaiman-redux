@@ -1,0 +1,1 @@
+react redux and redux are two seperate libraries, need both installed for most projects

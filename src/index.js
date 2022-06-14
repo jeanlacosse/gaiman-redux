@@ -4,10 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// redux setup/import
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+// create redux store state storage
+const store = createStore();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    {/* wrap entire app in Provider */}
+    <Provider store={store}>
     <App />
+    </Provider>
   </React.StrictMode>
 );
 
